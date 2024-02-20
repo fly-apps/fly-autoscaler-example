@@ -1,0 +1,8 @@
+app = "fly-autoscaler-metric"
+
+[build]
+build_target = "metric"
+
+[metrics]
+port = 8080
+path = "/metrics"

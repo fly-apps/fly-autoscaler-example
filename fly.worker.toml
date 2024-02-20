@@ -1,0 +1,4 @@
+app = "fly-autoscaler-worker"
+
+[build]
+build_target = "worker"
