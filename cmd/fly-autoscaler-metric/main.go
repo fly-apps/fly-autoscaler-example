@@ -2,18 +2,24 @@ package main
 
 import (
 	"log"
+	"log/slog"
 	"net/http"
 	"sync/atomic"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
+
+const addr = ":8080"
 
 func main() {
 	go walk()
 
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	slog.Info("serving metrics", slog.String("addr", addr))
+	http.Handle("/metrics", promhttp.Handler())
+	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -25,11 +31,13 @@ func walk() {
 	defer ticker.Stop()
 
 	for {
+		slog.Info("queue depth increasing")
 		for i := int64(min); i <= max; i++ {
 			<-ticker.C
 			queueDepth.Store(i)
 		}
 
+		slog.Info("queue depth decreasing")
 		for i := int64(max); i >= min; i-- {
 			<-ticker.C
 			queueDepth.Store(i)
