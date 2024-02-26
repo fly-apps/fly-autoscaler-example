@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	d := 10 * time.Second
+	d := 5 * time.Minute
 
 	fmt.Printf("Running for %s...\n", d)
 	time.Sleep(d)
