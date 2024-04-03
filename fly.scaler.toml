@@ -1,7 +1,7 @@
 app = "fly-autoscaler-scaler"
 
 [build]
-image = "flyio/fly-autoscaler:pr-23"
+image = "flyio/fly-autoscaler:0.2.1"
 
 [env]
 FAS_APP_NAME = "fly-autoscaler-worker"
