@@ -1,11 +1,12 @@
 app = "fly-autoscaler-scaler"
 
 [build]
-image = "flyio/fly-autoscaler:0.2"
+image = "flyio/fly-autoscaler:0.2.1"
 
 [env]
 FAS_APP_NAME = "fly-autoscaler-worker"
-FAS_STARTED_MACHINE_COUNT = "queue_depth / 10"
+FAS_REGIONS = "iad,ord,sjc,lhr,nrt"
+FAS_CREATED_MACHINE_COUNT = "queue_depth / 10"
 FAS_PROMETHEUS_ADDRESS = "https://api.fly.io/prometheus/fly-autoscaler-example"
 FAS_PROMETHEUS_METRIC_NAME = "queue_depth"
 FAS_PROMETHEUS_QUERY = "sum(queue_depth{app='fly-autoscaler-metric'})"
