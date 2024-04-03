@@ -1,14 +1,17 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"time"
+	"os"
+	"os/signal"
 )
 
 func main() {
-	d := 5 * time.Minute
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
 
-	fmt.Printf("Running for %s...\n", d)
-	time.Sleep(d)
-	fmt.Println("...shutting down")
+	fmt.Println("Running worker, waiting for interrupt...")
+	<-ctx.Done()
+	fmt.Println("Interrupt received, shutting down.")
 }
